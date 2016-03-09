@@ -13,6 +13,14 @@
 		93D04F701C8F8607001031E7 /* FinalProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F6E1C8F8607001031E7 /* FinalProject.xcdatamodeld */; };
 		93D04F721C8F8607001031E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93D04F711C8F8607001031E7 /* Assets.xcassets */; };
 		93D04F751C8F8607001031E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93D04F731C8F8607001031E7 /* LaunchScreen.storyboard */; };
+		93D04F7D1C8F8BBA001031E7 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F7C1C8F8BBA001031E7 /* EventViewController.swift */; };
+		93D04F7F1C90585D001031E7 /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F7E1C90585D001031E7 /* HomeTabBarViewController.swift */; };
+		93D04F811C905889001031E7 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F801C905889001031E7 /* ColorExtension.swift */; };
+		93D04F841C90594E001031E7 /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F831C90594E001031E7 /* ImageExtension.swift */; };
+		93D04F871C90B259001031E7 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F861C90B259001031E7 /* FavoritesViewController.swift */; };
+		93D04F891C90B268001031E7 /* BabyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F881C90B268001031E7 /* BabyDetailsViewController.swift */; };
+		93D04F8B1C90B276001031E7 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F8A1C90B276001031E7 /* ShopViewController.swift */; };
+		93D04F8D1C90B288001031E7 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F8C1C90B288001031E7 /* PhotosViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +32,14 @@
 		93D04F711C8F8607001031E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93D04F741C8F8607001031E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93D04F761C8F8607001031E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93D04F7C1C8F8BBA001031E7 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventViewController.swift; path = Controllers/EventViewController.swift; sourceTree = "<group>"; };
+		93D04F7E1C90585D001031E7 /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
+		93D04F801C905889001031E7 /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		93D04F831C90594E001031E7 /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		93D04F861C90B259001031E7 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoritesViewController.swift; path = Controllers/FavoritesViewController.swift; sourceTree = "<group>"; };
+		93D04F881C90B268001031E7 /* BabyDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BabyDetailsViewController.swift; path = Controllers/BabyDetailsViewController.swift; sourceTree = "<group>"; };
+		93D04F8A1C90B276001031E7 /* ShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		93D04F8C1C90B288001031E7 /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				93D04F671C8F8607001031E7 /* AppDelegate.swift */,
-				93D04F691C8F8607001031E7 /* ViewController.swift */,
+				93D04F821C9058BC001031E7 /* Extensions */,
+				93D04F851C90B242001031E7 /* Controllers */,
 				93D04F6B1C8F8607001031E7 /* Main.storyboard */,
 				93D04F711C8F8607001031E7 /* Assets.xcassets */,
 				93D04F731C8F8607001031E7 /* LaunchScreen.storyboard */,
@@ -65,6 +82,29 @@
 				93D04F6E1C8F8607001031E7 /* FinalProject.xcdatamodeld */,
 			);
 			path = FinalProject;
+			sourceTree = "<group>";
+		};
+		93D04F821C9058BC001031E7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				93D04F831C90594E001031E7 /* ImageExtension.swift */,
+				93D04F801C905889001031E7 /* ColorExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		93D04F851C90B242001031E7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				93D04F691C8F8607001031E7 /* ViewController.swift */,
+				93D04F7C1C8F8BBA001031E7 /* EventViewController.swift */,
+				93D04F7E1C90585D001031E7 /* HomeTabBarViewController.swift */,
+				93D04F861C90B259001031E7 /* FavoritesViewController.swift */,
+				93D04F881C90B268001031E7 /* BabyDetailsViewController.swift */,
+				93D04F8A1C90B276001031E7 /* ShopViewController.swift */,
+				93D04F8C1C90B288001031E7 /* PhotosViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +139,7 @@
 				TargetAttributes = {
 					93D04F631C8F8607001031E7 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = BL9KN9275E;
 					};
 				};
 			};
@@ -138,9 +179,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D04F841C90594E001031E7 /* ImageExtension.swift in Sources */,
+				93D04F8D1C90B288001031E7 /* PhotosViewController.swift in Sources */,
 				93D04F6A1C8F8607001031E7 /* ViewController.swift in Sources */,
+				93D04F8B1C90B276001031E7 /* ShopViewController.swift in Sources */,
+				93D04F871C90B259001031E7 /* FavoritesViewController.swift in Sources */,
+				93D04F811C905889001031E7 /* ColorExtension.swift in Sources */,
+				93D04F7D1C8F8BBA001031E7 /* EventViewController.swift in Sources */,
 				93D04F681C8F8607001031E7 /* AppDelegate.swift in Sources */,
 				93D04F701C8F8607001031E7 /* FinalProject.xcdatamodeld in Sources */,
+				93D04F891C90B268001031E7 /* BabyDetailsViewController.swift in Sources */,
+				93D04F7F1C90585D001031E7 /* HomeTabBarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FinalProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mahisoft.FinalProject;
@@ -264,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FinalProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mahisoft.FinalProject;
