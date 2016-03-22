@@ -33,7 +33,7 @@ class EventViewController: UIViewController {
     }
     
     func loadEvent(){
-    
+        
         let store = EKEventStore()
         
         store.requestAccessToEntityType(.Event) {(granted, error) in
@@ -43,8 +43,7 @@ class EventViewController: UIViewController {
                 self.startDate = event.startDate
                 self.datePicker.setDate(self.startDate, animated: true)
             }else{
-                //Event deleted
-                //TODO: Remove from coreData
+                
             }
             
             
@@ -64,41 +63,76 @@ class EventViewController: UIViewController {
     @IBAction func addEvent(sender: AnyObject) {
         
         let store = EKEventStore()
-        store.requestAccessToEntityType(.Event) {(granted, error) in
+        
+        if let event = store.eventWithIdentifier(self.eventId){
             
-            guard granted else { return }
-            
-            let event = EKEvent(eventStore: store)
-            
-            event.title = self.eventName.text!
-            event.startDate = self.startDate
-            
-            //1 hour long meeting
-            event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
-            
-            event.calendar = store.defaultCalendarForNewEvents
-            
-            do {
-                try store.saveEvent(event, span: .ThisEvent, commit: true)
-                self.eventId = event.eventIdentifier
+            store.requestAccessToEntityType(.Event) {(granted, error) in
                 
-                //TODO: SAVE IN COREDATA
+                guard granted else { return }
                 
+                event.title = self.eventName.text!
+                event.startDate = self.startDate
                 
-                //TODO: Mostrar mensaje de exito
+                //1 hour long meeting
+                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
                 
-                //Ir a la pantalla anterior
-                self.goBack(sender)
+                event.calendar = store.defaultCalendarForNewEvents
                 
-            } catch {
-                // Display error to user
+                do {
+                    try store.saveEvent(event, span: .ThisEvent, commit: true)
+                    
+                    //TODO: Mostrar mensaje de exito
+                    
+                    PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                    
+                    
+                    //Ir a la pantalla anterior
+                    self.goBack(sender)
+                    
+                } catch {
+                    // Display error to user
+                }
+            }
+        }else{
+            
+            store.requestAccessToEntityType(.Event) {(granted, error) in
+                
+                guard granted else { return }
+                
+                let event = EKEvent(eventStore: store)
+                
+                event.title = self.eventName.text!
+                event.startDate = self.startDate
+                
+                //1 hour long meeting
+                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                
+                event.calendar = store.defaultCalendarForNewEvents
+                
+                do {
+                    try store.saveEvent(event, span: .ThisEvent, commit: true)
+                    self.eventId = event.eventIdentifier
+                    
+                    PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                    
+                    //TODO: Mostrar mensaje de exito
+                    
+                    //Ir a la pantalla anterior
+                    self.goBack(sender)
+                    
+                } catch {
+                    // Display error to user
+                }
             }
         }
     }
     
     @IBAction func deleteEvent(sender: AnyObject) {
         
+        PersistenceManager.instance.deleteEvent(self.eventId)
+        
         deleteEvent()
+        
     }
     
     func deleteEvent(){

@@ -10,10 +10,14 @@ import UIKit
 
 class PhotosViewController: UIViewController {
 
+    var photoControl: PhotoControl?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        photoControl = PhotoControl(currentViewController: self)
+        photoControl?.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,6 +26,10 @@ class PhotosViewController: UIViewController {
     }
     
 
+    @IBAction func addNewPicture(sender: AnyObject) {
+        photoControl?.showPhotoOptionsActionSheet()
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -32,4 +40,15 @@ class PhotosViewController: UIViewController {
     }
     */
 
+}
+
+
+extension PhotosViewController: PhotoControlProtocol{
+    
+    func addPhoto(image: UIImageView) {
+        
+        //TODO: Add new image in array
+        //TODO: Save in coredata
+       
+    }
 }
