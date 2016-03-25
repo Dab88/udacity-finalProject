@@ -44,6 +44,8 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         
+        (self.tabBarController as! HomeTabBarViewController).setNavTitle(0)
+        
         super.viewWillAppear(animated)
  
     }
@@ -54,8 +56,8 @@ class ViewController: UIViewController {
         selectedEventID = ""
         events = PersistenceManager.instance.getEvents()
         tableView.reloadData()
-        
     }
+    
     func deletePhoto(indexPath:NSIndexPath) {
         
         let selectedEvent = fetchedController.objectAtIndexPath(indexPath) as! Event

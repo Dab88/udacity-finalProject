@@ -19,8 +19,8 @@ extension NSDate {
         return  "yyyy-MM-dd"
     }
     
-    func dateFromString(date: String, format: String) -> NSDate {
-      
+    func dateFromString(date: String, format: String = "MM/dd/yyyy") -> NSDate {
+     
         let formatter = NSDateFormatter()
         let locale = NSLocale(localeIdentifier: "en_US_POSIX")
         
@@ -45,9 +45,18 @@ extension NSDate {
     func stringFromDateInLocalFormat() -> String{
         
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MM/dd/yyy h:mm a"
+        formatter.dateFormat = "MM/dd/yyyy h:mm a"
         formatter.AMSymbol = "AM"
         formatter.PMSymbol = "PM"
+        
+        return formatter.stringFromDate(self)
+        
+    }
+    
+    func stringFromDateInGeneralFormat(format: String = "MM/dd/yyyy") -> String{
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = format
         
         return formatter.stringFromDate(self)
         

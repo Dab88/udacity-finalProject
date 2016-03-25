@@ -44,6 +44,9 @@ class EventViewController: UIViewController {
                 self.datePicker.setDate(self.startDate, animated: true)
             }else{
                 
+                //TODO: El evento ha sido eliminado del calendario, cree otro
+                
+                PersistenceManager.instance.deleteEvent(self.eventId)
             }
             
             

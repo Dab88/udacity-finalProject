@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9322052A1CA55E7300E32351 /* Baby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932205291CA55E7300E32351 /* Baby.swift */; };
 		938F928D1CA18EBF001E4A39 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938F928C1CA18EBF001E4A39 /* PersistenceManager.swift */; };
 		938F92911CA1925C001E4A39 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938F92901CA1925C001E4A39 /* EventCell.swift */; };
 		938F92931CA19291001E4A39 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938F92921CA19291001E4A39 /* StringExtension.swift */; };
@@ -28,11 +29,11 @@
 		93D04F8F1C90D74E001031E7 /* PhotoControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F8E1C90D74E001031E7 /* PhotoControl.swift */; };
 		93D04F911C90D899001031E7 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F901C90D899001031E7 /* Messages.swift */; };
 		93D04F991C90DA3C001031E7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F931C90DA3C001031E7 /* Event.swift */; };
-		93D04F9B1C90DA3C001031E7 /* Baby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F951C90DA3C001031E7 /* Baby.swift */; };
 		93D04F9D1C90DA3C001031E7 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D04F971C90DA3C001031E7 /* Product.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		932205291CA55E7300E32351 /* Baby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Baby.swift; path = Models/Baby.swift; sourceTree = "<group>"; };
 		938F928C1CA18EBF001E4A39 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		938F92901CA1925C001E4A39 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventCell.swift; path = Cells/EventCell.swift; sourceTree = "<group>"; };
 		938F92921CA19291001E4A39 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -56,7 +57,6 @@
 		93D04F8E1C90D74E001031E7 /* PhotoControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoControl.swift; sourceTree = "<group>"; };
 		93D04F901C90D899001031E7 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		93D04F931C90DA3C001031E7 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Event.swift; path = CoreData/Event.swift; sourceTree = "<group>"; };
-		93D04F951C90DA3C001031E7 /* Baby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Baby.swift; path = CoreData/Baby.swift; sourceTree = "<group>"; };
 		93D04F971C90DA3C001031E7 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Product.swift; path = CoreData/Product.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		932205281CA55E5A00E32351 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				932205291CA55E7300E32351 /* Baby.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		938F92941CA192B3001E4A39 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +108,7 @@
 			children = (
 				93D04F671C8F8607001031E7 /* AppDelegate.swift */,
 				938F928C1CA18EBF001E4A39 /* PersistenceManager.swift */,
+				932205281CA55E5A00E32351 /* Models */,
 				93D04F821C9058BC001031E7 /* Extensions */,
 				938F92941CA192B3001E4A39 /* Cell */,
 				93D04F9E1C90DA42001031E7 /* CoreData */,
@@ -129,13 +138,13 @@
 		93D04F851C90B242001031E7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				93D04F691C8F8607001031E7 /* ViewController.swift */,
-				93D04F7C1C8F8BBA001031E7 /* EventViewController.swift */,
 				93D04F7E1C90585D001031E7 /* HomeTabBarViewController.swift */,
-				93D04F861C90B259001031E7 /* FavoritesViewController.swift */,
-				93D04F881C90B268001031E7 /* BabyDetailsViewController.swift */,
+				93D04F691C8F8607001031E7 /* ViewController.swift */,
 				93D04F8A1C90B276001031E7 /* ShopViewController.swift */,
+				93D04F881C90B268001031E7 /* BabyDetailsViewController.swift */,
+				93D04F861C90B259001031E7 /* FavoritesViewController.swift */,
 				93D04F8C1C90B288001031E7 /* PhotosViewController.swift */,
+				93D04F7C1C8F8BBA001031E7 /* EventViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -144,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				93D04F931C90DA3C001031E7 /* Event.swift */,
-				93D04F951C90DA3C001031E7 /* Baby.swift */,
 				93D04F971C90DA3C001031E7 /* Product.swift */,
 			);
 			name = CoreData;
@@ -231,10 +239,10 @@
 				93D04F871C90B259001031E7 /* FavoritesViewController.swift in Sources */,
 				938F92961CA19370001E4A39 /* DateExtension.swift in Sources */,
 				93D04F811C905889001031E7 /* ColorExtension.swift in Sources */,
-				93D04F9B1C90DA3C001031E7 /* Baby.swift in Sources */,
 				93D04F911C90D899001031E7 /* Messages.swift in Sources */,
 				938F92911CA1925C001E4A39 /* EventCell.swift in Sources */,
 				93D04F7D1C8F8BBA001031E7 /* EventViewController.swift in Sources */,
+				9322052A1CA55E7300E32351 /* Baby.swift in Sources */,
 				938F928D1CA18EBF001E4A39 /* PersistenceManager.swift in Sources */,
 				93D04F681C8F8607001031E7 /* AppDelegate.swift in Sources */,
 				93D04F8F1C90D74E001031E7 /* PhotoControl.swift in Sources */,

@@ -16,6 +16,8 @@ class PersistenceManager: NSObject {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let babyKey = "babyInfo"
+    var baby:Baby?
     
     class var instance: PersistenceManager {
         
@@ -32,11 +34,34 @@ class PersistenceManager: NSObject {
     }
     
     required override init(){
+        baby = Baby()
+    }
+    
+    
+    func saveBaby(){
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let encodedObject = NSKeyedArchiver.archivedDataWithRootObject(baby!)
+        
+        defaults.setObject(encodedObject, forKey: babyKey)
+        defaults.synchronize()
+        
+        loadBaby()
         
     }
     
- 
-  
+    func loadBaby(){
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let usertemp = defaults.objectForKey(babyKey) {
+            if let babyObject = NSKeyedUnarchiver.unarchiveObjectWithData(usertemp as! NSData) as? Baby{
+                baby = babyObject
+            }
+        }
+        
+    }
+    
     func getEvents() -> [Event]{
         
         let managedContext = appDelegate.managedObjectContext
@@ -120,11 +145,11 @@ class PersistenceManager: NSObject {
     }
     
     /*
-    func savePhoto(pin: Pin, imagePath: String, name: String){
-        let photo = Photo(name: name , imageUrl: imagePath, context: managedContext)
-        photo.pin = pin
-    }
-    */
+     func savePhoto(pin: Pin, imagePath: String, name: String){
+     let photo = Photo(name: name , imageUrl: imagePath, context: managedContext)
+     photo.pin = pin
+     }
+     */
     
     //MARK:
     func saveContext() {

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
-    <entity name="Baby" representedClassName=".Baby" syncable="YES">
-        <attribute name="bornDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="dadName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gender" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="momName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="Event" representedClassName=".Event" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,7 +11,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Baby" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Event" positionX="-54" positionY="27" width="128" height="90"/>
         <element name="Product" positionX="-36" positionY="36" width="128" height="90"/>
     </elements>
