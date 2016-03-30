@@ -19,7 +19,7 @@ class HomeTabBarViewController: UITabBarController{
     var navItem:UINavigationItem = UINavigationItem()
     
     
-    let titles = [ "Vaccines", "Products", "Baby", "Favorites", "Pictures"]
+    let titles = [ "Vaccines", "Baby Products", "Baby", "Favorites", "Pictures"]
     
     override func viewDidLoad() {
         
