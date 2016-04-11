@@ -180,8 +180,12 @@ class ConnectionAPI: NSObject {
                         }
                         
                         if let result = result{
-                            self.delegate?.didReceiveSuccess(results: result, path: path, serverTag: serverTag)
-                            return
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.delegate?.didReceiveSuccess(results: result, path: path, serverTag: serverTag)
+                                return
+                            })
+                            
+                        
                         }
                         
                     }else if (error != nil) {
@@ -191,7 +195,10 @@ class ConnectionAPI: NSObject {
             }
             
             if let errorObject = errorObject{
-                self.delegate?.didReceiveFail(error: errorObject, errorObject: errorObject, path: path, serverTag: serverTag)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.delegate?.didReceiveFail(error: errorObject, errorObject: errorObject, path: path, serverTag: serverTag)
+                })
+               
             }
             
         })

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MyVaccinesViewController.swift
 //  FinalProject
 //
 //  Created by Daniela Velasquez on 3/8/16.
@@ -10,33 +10,13 @@ import UIKit
 import EventKit
 import CoreData
 
-class ViewController: UIViewController {
+class MyVaccinesViewController: UIViewController {
 
-    
     @IBOutlet weak var tableView: UITableView!
     
     var savedEventId: String = ""
     var events = [Event]()
     var selectedEventID:String = ""
-    
-    var persistenceContext: NSManagedObjectContext {
-        return  PersistenceManager.instance.managedContext
-    }
-    
-    
-    lazy var fetchedController: NSFetchedResultsController = {
-        
-        let fetchRequest = NSFetchRequest(entityName: "Event")
-        //fetchRequest.predicate = NSPredicate(format: "identifier == %@", 1)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-            managedObjectContext: self.persistenceContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        return fetchedResultsController
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +27,6 @@ class ViewController: UIViewController {
         (self.tabBarController as! HomeTabBarViewController).setNavTitle(0)
         
         super.viewWillAppear(animated)
- 
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,15 +35,6 @@ class ViewController: UIViewController {
         selectedEventID = ""
         events = PersistenceManager.instance.getEvents()
         tableView.reloadData()
-    }
-    
-    func deletePhoto(indexPath:NSIndexPath) {
-        
-        let selectedEvent = fetchedController.objectAtIndexPath(indexPath) as! Event
-        
-        persistenceContext.deleteObject(selectedEvent)
-        
-        PersistenceManager.instance.saveContext()
     }
     
     //MARK: Navigation
@@ -79,7 +49,7 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate{
+extension MyVaccinesViewController: UITableViewDataSource, UITableViewDelegate{
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -89,7 +59,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: EventCell = tableView.dequeueReusableCellWithIdentifier(EventCell.identifier, forIndexPath: indexPath) as! EventCell
-        
         
         let event = events[indexPath.row]
         

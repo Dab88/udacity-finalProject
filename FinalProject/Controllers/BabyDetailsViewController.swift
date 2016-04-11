@@ -36,7 +36,9 @@ class BabyDetailsViewController: UIViewController {
             daddyNameTxtField.text = baby.dadName
             
             genderSwitch.on = (baby.gender ==  GENDER.boy)
-            bornDateLbl.text = baby.bornDate
+            bornDateLbl.text = baby.bornDate == "" ? "- Select a day -" : baby.bornDate
+            
+            print(baby.bornDate)
             
             if(bornDateLbl.text != "- Select a day - "){
                 datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)

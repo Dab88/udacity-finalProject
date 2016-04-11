@@ -25,9 +25,7 @@ class ItemsResponse: NSObject {
                 if object is NSDictionary{
                     
                     let program = Item(response: object as! NSDictionary)
-                    
-                    print(program)
-                    
+                                        
                     itemsTemp.append(program)
                     
                 }

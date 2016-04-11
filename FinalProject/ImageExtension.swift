@@ -19,7 +19,7 @@ extension UIImageView{
             }.resume()
     }
     
-    func downloadImage(url: NSURL, placeHolderName: String = ""){
+    func downloadImage(url: NSURL, placeHolderName: String = "pregnant-gris"){
         
         //Set placeholder image
         self.image = UIImage(named: placeHolderName)

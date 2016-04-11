@@ -11,24 +11,8 @@ import Foundation
 
 import UIKit
 
-
-
 //Documentation
 //http://developer.ebay.com/devzone/finding/concepts/MakingACall.html
-
-
-//Request first page
-//http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=Dnd-FinalPro-PRD-b38c4f481-d931abea&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=babys&paginationInput.entriesPerPage=3
-
-
-//Request - Next page
-//http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=Dnd-FinalPro-PRD-b38c4f481-d931abea&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=babys&paginationInput.entriesPerPage=3&paginationInput.pageNumber=2
-
-
-
-//Para ver la segunda, tercera, etc pagina se usa el parametro paginationInput.pageNumber junto con el numero de elementos por pagina para que se pueda calcular. Por ejemplo:
-//paginationInput.entriesPerPage=3&paginationInput.pageNumber=2
-
 
 struct APISettings{
     
@@ -71,5 +55,19 @@ struct Messages {
     static let bCamera  = "Camera"
     static let bLibrary  = "Photo Library"
     
+    
+}
+
+
+
+struct Support {
+    
+    
+    static func showGeneralAlert(title:String, message:String, currentVC: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let dismissAction = UIAlertAction(title: Messages.bOk, style: .Default, handler: nil)
+        alert.addAction(dismissAction)
+        currentVC.presentViewController(alert, animated: true, completion: nil)
+    }
     
 }

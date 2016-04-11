@@ -16,6 +16,7 @@ class PersistenceManager: NSObject {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     let managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     let babyKey = "babyInfo"
     var baby:Baby?
     
@@ -127,8 +128,6 @@ class PersistenceManager: NSObject {
     
     func deleteEvent(identifier: String){
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "Event")
         fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
         
@@ -144,12 +143,88 @@ class PersistenceManager: NSObject {
         }
     }
     
-    /*
-     func savePhoto(pin: Pin, imagePath: String, name: String){
-     let photo = Photo(name: name , imageUrl: imagePath, context: managedContext)
-     photo.pin = pin
-     }
-     */
+    func getFavorites() -> [Product]{
+        
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Product")
+        
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            return results as! [Product]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            return [Product]()
+        }
+        
+    }
+    
+    
+    func saveProduct(item: Item){
+        
+        let entity =  NSEntityDescription.entityForName("Product", inManagedObjectContext:managedContext)
+        
+        let pin = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        
+        
+        pin.setValue(item.viewItemURL, forKey: "itemId")
+        pin.setValue(item.viewItemURL, forKey: "viewUrl")
+        pin.setValue(item.title, forKey: "name")
+        pin.setValue(item.galleryURL, forKey: "imageUrl")
+        pin.setValue(item.price, forKey: "price")
+        pin.setValue(item.currency, forKey: "currency")
+        pin.setValue(true, forKey: "favorite")
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+
+    func deleteProduct(identifier: String){
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Product")
+        fetchRequest.predicate = NSPredicate(format: "itemId == %@", identifier)
+        
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            
+            let product = results[0] as! Product
+            
+            managedContext.deleteObject(product)
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    
+    func productIsFavorite(identifier: String) -> Bool{
+    
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Product")
+        fetchRequest.predicate = NSPredicate(format: "itemId == %@", identifier)
+        
+        do {
+            let results = try managedContext.executeFetchRequest(fetchRequest)
+            
+            
+            return (results.count > 0)
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+         return false
+    }
+
+    
+    func savePhoto(imagePath: String){
+        let _ = Photo(url: imagePath, context: managedContext)
+    }
+    
     
     //MARK:
     func saveContext() {

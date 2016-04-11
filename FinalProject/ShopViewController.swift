@@ -8,21 +8,22 @@
 
 import UIKit
 
-//TODO:
-// ShowRequestMode
-// Next search when show the last option
-// Save Favorites
-// Show product detail in webview
 class ShopViewController: UIViewController {
     
     
     var currentPage:Int = 1
     var products:Array<Item> = []
+    var productSelected:String = ""
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var overlay: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        makeProductRequest()
+        showRequestMode(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -32,8 +33,19 @@ class ShopViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        makeProductRequest()
     }
+    
+    override func viewDidLayoutSubviews(){
+        //Remove padding in tableview cells
+        if (tableView!.respondsToSelector(Selector("setSeparatorInset:"))){
+            tableView!.separatorInset = UIEdgeInsetsZero
+        }
+        
+        if (tableView!.respondsToSelector(Selector("setLayoutMargins:"))){
+            tableView!.layoutMargins = UIEdgeInsetsZero
+        }
+    }
+    
     
     func makeProductRequest(){
         
@@ -49,30 +61,36 @@ class ShopViewController: UIViewController {
         params["paginationInput.entriesPerPage"] = "10"
         params["paginationInput.pageNumber"] = "\(currentPage)"
         
-        //Request first page
-        //http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=Dnd-FinalPro-PRD-b38c4f481-d931abea&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=babys&paginationInput.entriesPerPage=3
-        
-        
-        //Request - Next page
-        //http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=Dnd-FinalPro-PRD-b38c4f481-d931abea&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=babys&paginationInput.entriesPerPage=3&paginationInput.pageNumber=2
-        
-        //Para ver la segunda, tercera, etc pagina se usa el parametro paginationInput.pageNumber junto con el numero de elementos por pagina para que se pueda calcular. Por ejemplo:
-        //paginationInput.entriesPerPage=3&paginationInput.pageNumber=2
-        
         connection.get(APISettings.uriFind, parametersArray: params, serverTag: "PRODUCTS")
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        if segue.identifier == "ProductDetail" {
+            
+            let vc = segue.destinationViewController as! ProductDetailViewController
+            
+            self.modalPresentationStyle = UIModalPresentationStyle.Custom
+            
+            vc.productURL = productSelected
+            
+        }
+    }
     
+    
+    func showRequestMode(show: Bool){
+        
+        if(show){
+            activityIndicator.startAnimating()
+        }else{
+            activityIndicator.stopAnimating()
+        }
+        
+        overlay.hidden = !show
+        tableView.hidden = show
+    }
 }
 
 
@@ -85,17 +103,68 @@ extension ShopViewController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: ProductCell = tableView.dequeueReusableCellWithIdentifier(ProductCell.identifier, forIndexPath: indexPath) as! ProductCell
+        if(indexPath.row < products.count - 1){
+            let cell: ProductCell = tableView.dequeueReusableCellWithIdentifier(ProductCell.identifier, forIndexPath: indexPath) as! ProductCell
+            
+            let product = products[indexPath.row]
+            cell.setup(product)
+            
+            //Set tag
+            cell.tag = indexPath.row
+            
+            return cell
+        }
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("LastProductCell", forIndexPath: indexPath) as! ProductCell
         
-        let product = products[indexPath.row]
-        
-        cell.setup(product)
         
         //Set tag
         cell.tag = indexPath.row
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if(indexPath.row == products.count - 1){
+            currentPage = currentPage + 1
+            makeProductRequest()
+        }
+        
+        //Remove left padding in cells
+        if (cell.respondsToSelector(Selector("setSeparatorInset:"))){
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        
+        if (cell.respondsToSelector(Selector("setLayoutMargins:"))){
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if(indexPath.row < products.count - 1){
+            
+            let product = products[indexPath.row]
+            
+            productSelected = product.viewItemURL!
+            
+            //Show next view
+            performSegueWithIdentifier("ProductDetail", sender: self)
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if(indexPath.row < products.count - 1){
+            return 100.0
+        }
+        
+        return 70.0
+        
     }
     
 }
@@ -112,21 +181,24 @@ extension ShopViewController: ConnectionAPIProtocol{
         let resultsArray = jsonResult["findItemsByKeywordsResponse"] as! [AnyObject]
         
         for object in resultsArray{
-            
             let searchResult = object["searchResult"] as! [NSDictionary]
             let itemsResponse = ItemsResponse(response: searchResult[0])
             
-            products = itemsResponse.item!
-            
-            tableView.reloadData()
-            
+            products.appendContentsOf(itemsResponse.item!)
         }
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.showRequestMode(false)
+            self.tableView.reloadData()
+        })
+        
         
     }
     
     
     func didReceiveFail(error error: NSError, errorObject: AnyObject, path: String, serverTag: String){
         
+        showRequestMode(false)
         print(errorObject)
     }
 }

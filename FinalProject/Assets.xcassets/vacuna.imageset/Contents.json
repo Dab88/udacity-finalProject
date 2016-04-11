@@ -2,17 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "photo-2.png",
+      "filename" : "vacuna.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "photo-icon.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "photo-3.png",
       "scale" : "2x"
     },
     {

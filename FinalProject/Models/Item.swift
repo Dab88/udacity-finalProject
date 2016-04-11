@@ -11,6 +11,7 @@ import UIKit
 
 class Item: NSObject {
     
+    var itemId:String?
     var title:String?
     var galleryURL:String?
     var viewItemURL:String?
@@ -21,7 +22,7 @@ class Item: NSObject {
     //No used
     var primaryCategory:[AnyObject]?
     var globalId:[String]?
-    var itemId:String?
+   
     
     init(response: NSDictionary){
         

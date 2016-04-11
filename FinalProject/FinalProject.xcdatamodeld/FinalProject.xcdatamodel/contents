@@ -5,13 +5,21 @@
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Photo" representedClassName=".Photo" syncable="YES">
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Product" representedClassName=".Product" syncable="YES">
+        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="viewUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Event" positionX="-54" positionY="27" width="128" height="90"/>
-        <element name="Product" positionX="-36" positionY="36" width="128" height="90"/>
+        <element name="Product" positionX="-36" positionY="36" width="128" height="150"/>
+        <element name="Photo" positionX="-45" positionY="81" width="128" height="60"/>
     </elements>
 </model>

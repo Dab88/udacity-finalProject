@@ -71,4 +71,71 @@ class ImageLoader {
         }
     }
     
+    
+    func deleteImage(imageName: String) {
+        
+        let path = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first!
+        
+        let imagePath = path.URLByAppendingPathComponent(imageName)
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(imagePath.path!) {
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(imagePath)
+            } catch {
+                print("Remove image error: \(imageName)")
+            }
+        }
+    }
+
+    
+    func imageCamera(filePath: String, completionHandler:(image: UIImage?, url: String) -> ()){
+        
+        let path = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first!
+        
+        let fileName = filePath
+        let urlPath = path.URLByAppendingPathComponent(fileName)
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(urlPath.path!) {
+            
+            let data = NSData(contentsOfURL: urlPath)
+            
+            if let goodData = data {
+                let image = UIImage(data: goodData)
+                dispatch_async(dispatch_get_main_queue(), {() in
+                    completionHandler(image: image, url: fileName)
+                })
+            }
+            
+            return
+        }else{
+        
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                
+                dispatch_async(dispatch_get_main_queue(), {() in
+                    completionHandler(image: nil, url: fileName)
+                })
+                
+                return
+            }
+        }
+        
+    }
+    
+    func saveImageInDirectory(filePath: String, imagePhoto: UIImage) -> Bool{
+    
+        let path = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).first!
+        
+        let fileName = filePath
+        let urlPath = path.URLByAppendingPathComponent(fileName)
+        let imageData: NSData = UIImagePNGRepresentation(imagePhoto)!
+       
+        //Save in Documents Directory
+        let success = NSFileManager.defaultManager().createFileAtPath(urlPath.path!, contents: imageData, attributes: nil)
+        
+        print("Save success : - \(success) \(urlPath.path)")
+        
+        return success
+    }
+
+    
 }
