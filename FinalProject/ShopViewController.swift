@@ -22,7 +22,10 @@ class ShopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeProductRequest()
+        if(available()){
+             makeProductRequest()
+        }
+        
         showRequestMode(true)
     }
     
@@ -46,7 +49,23 @@ class ShopViewController: UIViewController {
         }
     }
     
+    //MARK: Other Methods
+    /**
+     * Validate Internet access
+     */
+    func available() -> Bool{
+        if(Reachability.isConnectedToNetwork()){
+            return true
+        }else{
+            Support.showGeneralAlert("", message: Messages.mNoInternetConnection, currentVC: self)
+        }
+        
+        return false
+    }
     
+    /**
+     * Method for the product request
+     */
     func makeProductRequest(){
         
         let connection = ConnectionAPI(delegate: self)
@@ -127,8 +146,10 @@ extension ShopViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if(indexPath.row == products.count - 1){
-            currentPage = currentPage + 1
-            makeProductRequest()
+            if(available()){
+                currentPage = currentPage + 1
+                makeProductRequest()
+            }
         }
         
         //Remove left padding in cells

@@ -36,15 +36,8 @@ class BabyDetailsViewController: UIViewController {
             daddyNameTxtField.text = baby.dadName
             
             genderSwitch.on = (baby.gender ==  GENDER.boy)
-            bornDateLbl.text = baby.bornDate == "" ? "- Select a day -" : baby.bornDate
             
-            print(baby.bornDate)
-            
-            if(bornDateLbl.text != "- Select a day - "){
-                datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
-            }
         }
-        
         
     }
     
@@ -54,6 +47,10 @@ class BabyDetailsViewController: UIViewController {
         
         (self.tabBarController as! HomeTabBarViewController).setNavTitle(2)
         
+        bornDateLbl.text = "- Tap here and select a day -"
+        
+        datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
+    
         if let baby = PersistenceManager.instance.baby{
             
             babyNameTxtField.text = baby.name
@@ -61,11 +58,15 @@ class BabyDetailsViewController: UIViewController {
             daddyNameTxtField.text = baby.dadName
             
             genderSwitch.on = (baby.gender ==  GENDER.boy)
-            bornDateLbl.text = baby.bornDate
             
-            if(bornDateLbl.text != "- Select a day - "){
+            bornDateLbl.text = baby.bornDate == "" ? "- Tap here and select a day -" : baby.bornDate
+            
+            print(baby.bornDate)
+            
+            if(bornDateLbl.text != "- Tap here and select a day -"){
                 datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
             }
+            
         }
         
         

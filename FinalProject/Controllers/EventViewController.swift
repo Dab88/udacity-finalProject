@@ -11,10 +11,6 @@ import EventKit
 
 class EventViewController: UIViewController {
     
-    //Color Rosa D19FCA
-    //Color Gris C9C9C9
-    //BACKGROUND FFEFC3
-    //Purpura A03AE8
     @IBOutlet weak var eventName: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
@@ -30,8 +26,23 @@ class EventViewController: UIViewController {
         }
         
         datePicker.setDate(startDate, animated: true)
+        
+        //Add gesture from hide keyboard when the user touch the screen
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(EventViewController.hideKeyboard)))
+    
     }
     
+    
+    // MARK: - Keyboard management Methods
+    /*
+     * @author: Daniela Velasquez
+     * Hide the keyboard
+     */
+    func hideKeyboard(){
+        view.endEditing(true)
+    }
+    
+    //MARK: Other Methods
     func loadEvent(){
         
         let store = EKEventStore()
@@ -44,7 +55,7 @@ class EventViewController: UIViewController {
                 self.datePicker.setDate(self.startDate, animated: true)
             }else{
                 
-                //TODO: El evento ha sido eliminado del calendario, cree otro
+                Support.showGeneralAlert("", message:Messages.mEventDeleted, currentVC: self)
                 
                 PersistenceManager.instance.deleteEvent(self.eventId)
             }
@@ -84,16 +95,14 @@ class EventViewController: UIViewController {
                 do {
                     try store.saveEvent(event, span: .ThisEvent, commit: true)
                     
-                    //TODO: Mostrar mensaje de exito
-                    
                     PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
                     
-                    
-                    //Ir a la pantalla anterior
-                    self.goBack(sender)
+                    Support.showGeneralAlert("", message: Messages.mEventUpdateSuccess, currentVC: self, handlerSuccess:  { (action) in
+                        self.goBack(sender)
+                    })
                     
                 } catch {
-                    // Display error to user
+                    Support.showGeneralAlert("", message:Messages.mEventUpdateFail, currentVC: self)
                 }
             }
         }else{
@@ -118,13 +127,13 @@ class EventViewController: UIViewController {
                     
                     PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
                     
-                    //TODO: Mostrar mensaje de exito
-                    
-                    //Ir a la pantalla anterior
-                    self.goBack(sender)
+                    Support.showGeneralAlert("", message: Messages.mEventAddSuccess, currentVC: self, handlerSuccess:  { (action) in
+                        //Go to back
+                        self.goBack(sender)
+                    })
                     
                 } catch {
-                    // Display error to user
+                    Support.showGeneralAlert("", message:Messages.mEventAddFail, currentVC: self)
                 }
             }
         }
@@ -133,7 +142,6 @@ class EventViewController: UIViewController {
     @IBAction func deleteEvent(sender: AnyObject) {
         
         PersistenceManager.instance.deleteEvent(self.eventId)
-        
         deleteEvent()
         
     }
@@ -148,21 +156,23 @@ class EventViewController: UIViewController {
             if eventToRemove != nil {
                 do {
                     try store.removeEvent(eventToRemove!, span: .ThisEvent, commit: true)
+                    
+                    Support.showGeneralAlert("", message: Messages.mEventDeleteSuccess, currentVC: self, handlerSuccess:  { (action) in
+                        self.goBack(self)
+                    })
+                   
                 } catch {
-                    // Display error to user
+                     Support.showGeneralAlert("", message:Messages.mEventDeleteFail, currentVC: self)
                 }
             }
         }
     }
+}
+
+extension EventViewController: UITextFieldDelegate{
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
-    */
-    
 }

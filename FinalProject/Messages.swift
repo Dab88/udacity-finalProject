@@ -45,6 +45,18 @@ struct Messages {
     static let titleNetworkProblems = "Network Problems"
     
     static let mNoInternetConnection =  "No internet access"
+    
+    static let mEventAddSuccess =  "Your appointment has been added successfully"
+    static let mEventAddFail =  "Your appointment has not been added successfully"
+  
+    static let mEventUpdateSuccess =  "Your appointment has been updated successfully"
+    static let mEventUpdateFail =  "Your appointment has not been updated successfully"
+    
+    static let mEventDeleteSuccess =  "Your appointment has been deleted successfully"
+    static let mEventDeleteFail =  "Your appointment has not been deleted successfully"
+    static let mEventDeleted =  "Your appointment has been deleted. Please create another."
+    
+    
     static let mNoPins = "Sorry you don't have pins"
     
     static let bOk = "OK"
@@ -63,9 +75,10 @@ struct Messages {
 struct Support {
     
     
-    static func showGeneralAlert(title:String, message:String, currentVC: UIViewController) {
+    static func showGeneralAlert(title:String, message:String, currentVC: UIViewController, handlerSuccess: ((UIAlertAction) -> Void)? = nil) {
+        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let dismissAction = UIAlertAction(title: Messages.bOk, style: .Default, handler: nil)
+        let dismissAction = UIAlertAction(title: Messages.bOk, style: .Default, handler: handlerSuccess)
         alert.addAction(dismissAction)
         currentVC.presentViewController(alert, animated: true, completion: nil)
     }
