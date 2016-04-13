@@ -80,7 +80,10 @@ struct Support {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let dismissAction = UIAlertAction(title: Messages.bOk, style: .Default, handler: handlerSuccess)
         alert.addAction(dismissAction)
-        currentVC.presentViewController(alert, animated: true, completion: nil)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            currentVC.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
 }

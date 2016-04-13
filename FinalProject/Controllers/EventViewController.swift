@@ -29,7 +29,7 @@ class EventViewController: UIViewController {
         
         //Add gesture from hide keyboard when the user touch the screen
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(EventViewController.hideKeyboard)))
-    
+        
     }
     
     
@@ -78,65 +78,70 @@ class EventViewController: UIViewController {
         
         let store = EKEventStore()
         
-        if let event = store.eventWithIdentifier(self.eventId){
+        dispatch_async(dispatch_get_main_queue()) {
             
-            store.requestAccessToEntityType(.Event) {(granted, error) in
+            if let event = store.eventWithIdentifier(self.eventId){
                 
-                guard granted else { return }
-                
-                event.title = self.eventName.text!
-                event.startDate = self.startDate
-                
-                //1 hour long meeting
-                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
-                
-                event.calendar = store.defaultCalendarForNewEvents
-                
-                do {
-                    try store.saveEvent(event, span: .ThisEvent, commit: true)
+                store.requestAccessToEntityType(.Event) {(granted, error) in
                     
-                    PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                    guard granted else { return }
                     
-                    Support.showGeneralAlert("", message: Messages.mEventUpdateSuccess, currentVC: self, handlerSuccess:  { (action) in
-                        self.goBack(sender)
-                    })
+                    event.title = self.eventName.text!
+                    event.startDate = self.startDate
                     
-                } catch {
-                    Support.showGeneralAlert("", message:Messages.mEventUpdateFail, currentVC: self)
+                    //1 hour long meeting
+                    event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                    
+                    event.calendar = store.defaultCalendarForNewEvents
+                    
+                    do {
+                        try store.saveEvent(event, span: .ThisEvent, commit: true)
+                        
+                        PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                        
+                        Support.showGeneralAlert("", message: Messages.mEventUpdateSuccess, currentVC: self, handlerSuccess:  { (action) in
+                            self.goBack(sender)
+                        })
+                        
+                    } catch {
+                        Support.showGeneralAlert("", message:Messages.mEventUpdateFail, currentVC: self)
+                    }
+                }
+            }else{
+                
+                store.requestAccessToEntityType(.Event) {(granted, error) in
+                    
+                    guard granted else { return }
+                    
+                    let event = EKEvent(eventStore: store)
+                    
+                    event.title = self.eventName.text!
+                    event.startDate = self.startDate
+                    
+                    //1 hour long meeting
+                    event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                    
+                    event.calendar = store.defaultCalendarForNewEvents
+                    
+                    do {
+                        try store.saveEvent(event, span: .ThisEvent, commit: true)
+                        self.eventId = event.eventIdentifier
+                        
+                        PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                        
+                        Support.showGeneralAlert("", message: Messages.mEventAddSuccess, currentVC: self, handlerSuccess:  { (action) in
+                            //Go to back
+                            self.goBack(sender)
+                        })
+                        
+                    } catch {
+                        Support.showGeneralAlert("", message:Messages.mEventAddFail, currentVC: self)
+                    }
                 }
             }
-        }else{
             
-            store.requestAccessToEntityType(.Event) {(granted, error) in
-                
-                guard granted else { return }
-                
-                let event = EKEvent(eventStore: store)
-                
-                event.title = self.eventName.text!
-                event.startDate = self.startDate
-                
-                //1 hour long meeting
-                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
-                
-                event.calendar = store.defaultCalendarForNewEvents
-                
-                do {
-                    try store.saveEvent(event, span: .ThisEvent, commit: true)
-                    self.eventId = event.eventIdentifier
-                    
-                    PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
-                    
-                    Support.showGeneralAlert("", message: Messages.mEventAddSuccess, currentVC: self, handlerSuccess:  { (action) in
-                        //Go to back
-                        self.goBack(sender)
-                    })
-                    
-                } catch {
-                    Support.showGeneralAlert("", message:Messages.mEventAddFail, currentVC: self)
-                }
-            }
         }
+        
     }
     
     @IBAction func deleteEvent(sender: AnyObject) {
@@ -160,9 +165,9 @@ class EventViewController: UIViewController {
                     Support.showGeneralAlert("", message: Messages.mEventDeleteSuccess, currentVC: self, handlerSuccess:  { (action) in
                         self.goBack(self)
                     })
-                   
+                    
                 } catch {
-                     Support.showGeneralAlert("", message:Messages.mEventDeleteFail, currentVC: self)
+                    Support.showGeneralAlert("", message:Messages.mEventDeleteFail, currentVC: self)
                 }
             }
         }
