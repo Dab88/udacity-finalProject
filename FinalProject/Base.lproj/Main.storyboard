@@ -218,7 +218,10 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="KCo-AI-m7g" firstAttribute="centerY" secondItem="BQ0-Cq-ZBn" secondAttribute="centerY" id="cin-xy-dDz"/>
+                                                <constraint firstItem="KCo-AI-m7g" firstAttribute="top" secondItem="BQ0-Cq-ZBn" secondAttribute="top" id="gKG-j5-NXk"/>
                                                 <constraint firstItem="KCo-AI-m7g" firstAttribute="centerX" secondItem="BQ0-Cq-ZBn" secondAttribute="centerX" id="qfm-gh-hzn"/>
+                                                <constraint firstItem="KCo-AI-m7g" firstAttribute="top" secondItem="BQ0-Cq-ZBn" secondAttribute="topMargin" constant="-8" id="tCm-Yv-GiC"/>
                                                 <constraint firstItem="KCo-AI-m7g" firstAttribute="centerY" secondItem="BQ0-Cq-ZBn" secondAttribute="centerY" id="vn0-YO-Fd7"/>
                                             </constraints>
                                             <variation key="default">
@@ -226,7 +229,10 @@
                                                     <exclude reference="KCo-AI-m7g"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="cin-xy-dDz"/>
+                                                    <exclude reference="gKG-j5-NXk"/>
                                                     <exclude reference="qfm-gh-hzn"/>
+                                                    <exclude reference="tCm-Yv-GiC"/>
                                                     <exclude reference="vn0-YO-Fd7"/>
                                                 </mask>
                                             </variation>
@@ -235,7 +241,10 @@
                                                     <include reference="KCo-AI-m7g"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="cin-xy-dDz"/>
+                                                    <exclude reference="gKG-j5-NXk"/>
                                                     <include reference="qfm-gh-hzn"/>
+                                                    <exclude reference="tCm-Yv-GiC"/>
                                                     <include reference="vn0-YO-Fd7"/>
                                                 </mask>
                                             </variation>
@@ -1458,7 +1467,8 @@
                                                             <exclude reference="s0K-9w-gFR"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="93" y="15" width="105" height="58"/>
                                                         <mask key="constraints">
                                                             <include reference="rdB-na-yby"/>
                                                             <exclude reference="s0K-9w-gFR"/>
@@ -1524,7 +1534,8 @@
                                                             <exclude reference="gZC-c5-oww"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="203" y="37.5" width="25" height="25"/>
                                                         <mask key="constraints">
                                                             <include reference="7DF-or-BvV"/>
                                                             <include reference="gZC-c5-oww"/>
@@ -2073,7 +2084,8 @@
                                                             <exclude reference="aCR-ts-j3K"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="50" y="7" width="157" height="24"/>
                                                         <mask key="constraints">
                                                             <include reference="aCR-ts-j3K"/>
                                                         </mask>
@@ -2094,7 +2106,8 @@
                                                             <exclude reference="AN3-Eo-aVI"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="50" y="32" width="157" height="20"/>
                                                         <mask key="constraints">
                                                             <include reference="AN3-Eo-aVI"/>
                                                         </mask>

@@ -21,12 +21,8 @@ class ShopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         
-        if(available()){
-             makeProductRequest()
-        }
-        
-        showRequestMode(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -36,6 +32,13 @@ class ShopViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        showRequestMode(false)
+        
+        if(available()){
+            makeProductRequest()
+            showRequestMode(true)
+        }
     }
     
     override func viewDidLayoutSubviews(){
