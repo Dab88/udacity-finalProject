@@ -56,6 +56,8 @@ struct Messages {
     static let mEventDeleteFail =  "Your appointment has not been deleted successfully"
     static let mEventDeleted =  "Your appointment has been deleted. Please create another."
     
+    static let mEventPermissionFail =  "The app don't have a permissions for adding events in your calendar."
+    
     
     static let mNoPins = "Sorry you don't have pins"
     

@@ -15,6 +15,7 @@ class FavoritesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var noElementsView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,6 +29,7 @@ class FavoritesViewController: UIViewController {
         super.viewDidAppear(animated)
         products = PersistenceManager.instance.getFavorites()
         tableView.reloadData()
+        noElementsView.hidden = (products.count != 0)
     }
     
     override func viewDidLayoutSubviews(){

@@ -1467,8 +1467,7 @@
                                                             <exclude reference="s0K-9w-gFR"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="93" y="15" width="105" height="58"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="rdB-na-yby"/>
                                                             <exclude reference="s0K-9w-gFR"/>
@@ -1534,8 +1533,7 @@
                                                             <exclude reference="gZC-c5-oww"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="203" y="37.5" width="25" height="25"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="7DF-or-BvV"/>
                                                             <include reference="gZC-c5-oww"/>
@@ -1748,6 +1746,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Favorites" image="favorite-icon" id="3wC-e9-BoR"/>
                     <connections>
+                        <outlet property="noElementsView" destination="fZ4-X1-sKQ" id="jzE-M2-JJ5"/>
                         <outlet property="tableView" destination="GCj-ac-Dvp" id="34I-UB-0sE"/>
                     </connections>
                 </viewController>
@@ -2084,8 +2083,7 @@
                                                             <exclude reference="aCR-ts-j3K"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="50" y="7" width="157" height="24"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="aCR-ts-j3K"/>
                                                         </mask>
@@ -2106,8 +2104,7 @@
                                                             <exclude reference="AN3-Eo-aVI"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="50" y="32" width="157" height="20"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="AN3-Eo-aVI"/>
                                                         </mask>
@@ -2691,7 +2688,7 @@
         <image name="vacuna" width="2197" height="1463"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NNI-2W-4qc"/>
+        <segue reference="kef-LL-PA0"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.62745098040000002" green="0.2274509804" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

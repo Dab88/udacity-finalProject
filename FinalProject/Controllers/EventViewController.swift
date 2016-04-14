@@ -16,7 +16,7 @@ class EventViewController: UIViewController {
     
     var startDate: NSDate = NSDate()
     var eventId: String = ""
-    
+    let store = EKEventStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,20 @@ class EventViewController: UIViewController {
         
         //Add gesture from hide keyboard when the user touch the screen
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(EventViewController.hideKeyboard)))
+        
+        
+        
+        store.requestAccessToEntityType(.Event) {(granted, error) in
+            
+            guard granted else {
+              
+                Support.showGeneralAlert(Messages.titleAlert, message:Messages.mEventPermissionFail, currentVC: self)
+                
+                return
+            }
+            
+        }
+        
         
     }
     
@@ -76,70 +90,77 @@ class EventViewController: UIViewController {
     
     @IBAction func addEvent(sender: AnyObject) {
         
-        let store = EKEventStore()
-        
-        dispatch_async(dispatch_get_main_queue()) {
+      //Update Event
+        if let event = store.eventWithIdentifier(self.eventId){
             
-            if let event = store.eventWithIdentifier(self.eventId){
-                
-                store.requestAccessToEntityType(.Event) {(granted, error) in
+            store.requestAccessToEntityType(.Event) {(granted, error) in
+        
+                guard granted else {
+                    Support.showGeneralAlert("", message:Messages.mEventPermissionFail, currentVC: self)
                     
-                    guard granted else { return }
-                    
-                    event.title = self.eventName.text!
-                    event.startDate = self.startDate
-                    
-                    //1 hour long meeting
-                    event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
-                    
-                    event.calendar = store.defaultCalendarForNewEvents
-                    
-                    do {
-                        try store.saveEvent(event, span: .ThisEvent, commit: true)
-                        
-                        PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
-                        
-                        Support.showGeneralAlert("", message: Messages.mEventUpdateSuccess, currentVC: self, handlerSuccess:  { (action) in
-                            self.goBack(sender)
-                        })
-                        
-                    } catch {
-                        Support.showGeneralAlert("", message:Messages.mEventUpdateFail, currentVC: self)
-                    }
+                    return
                 }
-            }else{
                 
-                store.requestAccessToEntityType(.Event) {(granted, error) in
+                event.title = self.eventName.text!
+                event.startDate = self.startDate
+                
+                //1 hour long meeting
+                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                
+                event.calendar = self.store.defaultCalendarForNewEvents
+                
+                do {
+                    try self.store.saveEvent(event, span: .ThisEvent, commit: true)
                     
-                    guard granted else { return }
+                    PersistenceManager.instance.updateEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
                     
-                    let event = EKEvent(eventStore: store)
+                    Support.showGeneralAlert("", message: Messages.mEventUpdateSuccess, currentVC: self, handlerSuccess:  { (action) in
+                        self.goBack(sender)
+                    })
                     
-                    event.title = self.eventName.text!
-                    event.startDate = self.startDate
-                    
-                    //1 hour long meeting
-                    event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
-                    
-                    event.calendar = store.defaultCalendarForNewEvents
-                    
-                    do {
-                        try store.saveEvent(event, span: .ThisEvent, commit: true)
-                        self.eventId = event.eventIdentifier
-                        
-                        PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
-                        
-                        Support.showGeneralAlert("", message: Messages.mEventAddSuccess, currentVC: self, handlerSuccess:  { (action) in
-                            //Go to back
-                            self.goBack(sender)
-                        })
-                        
-                    } catch {
-                        Support.showGeneralAlert("", message:Messages.mEventAddFail, currentVC: self)
-                    }
+                } catch {
+                    Support.showGeneralAlert("", message:Messages.mEventUpdateFail, currentVC: self)
                 }
             }
+        }else{
             
+            //New event
+            store.requestAccessToEntityType(.Event) {(granted, error) in
+                
+                print(error)
+                
+                guard granted else {
+                    
+                    Support.showGeneralAlert("", message:Messages.mEventPermissionFail, currentVC: self)
+                    
+                    return
+                }
+                
+                let event = EKEvent(eventStore: self.store)
+                
+                event.title = self.eventName.text!
+                event.startDate = self.startDate
+                
+                //1 hour long meeting
+                event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                
+                event.calendar = self.store.defaultCalendarForNewEvents
+                
+                do {
+                    try self.store.saveEvent(event, span: .ThisEvent, commit: true)
+                    self.eventId = event.eventIdentifier
+                    
+                    PersistenceManager.instance.saveEvent(event.startDate, name: event.title, identifier: event.eventIdentifier)
+                    
+                    Support.showGeneralAlert("", message: Messages.mEventAddSuccess, currentVC: self, handlerSuccess:  { (action) in
+                        //Go to back
+                        self.goBack(sender)
+                    })
+                    
+                } catch {
+                    Support.showGeneralAlert("", message:Messages.mEventAddFail, currentVC: self)
+                }
+            }
         }
         
     }
@@ -153,14 +174,13 @@ class EventViewController: UIViewController {
     
     func deleteEvent(){
         
-        let store = EKEventStore()
         
         store.requestAccessToEntityType(.Event) {(granted, error) in
             if !granted { return }
-            let eventToRemove = store.eventWithIdentifier(self.eventId)
+            let eventToRemove = self.store.eventWithIdentifier(self.eventId)
             if eventToRemove != nil {
                 do {
-                    try store.removeEvent(eventToRemove!, span: .ThisEvent, commit: true)
+                    try self.store.removeEvent(eventToRemove!, span: .ThisEvent, commit: true)
                     
                     Support.showGeneralAlert("", message: Messages.mEventDeleteSuccess, currentVC: self, handlerSuccess:  { (action) in
                         self.goBack(self)

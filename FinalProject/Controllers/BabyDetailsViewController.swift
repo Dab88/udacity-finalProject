@@ -28,7 +28,7 @@ class BabyDetailsViewController: UIViewController {
         
         //Add gesture from hide keyboard when the user touch the screen
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(BabyDetailsViewController.hideKeyboard)))
-        
+
         if let baby = PersistenceManager.instance.baby{
             
             babyNameTxtField.text = baby.name
@@ -37,20 +37,23 @@ class BabyDetailsViewController: UIViewController {
             
             genderSwitch.on = (baby.gender ==  GENDER.boy)
             
+            setBornDate(baby.bornDate)
+            
         }
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         
-        super.viewWillAppear(animated)
-        
+        super.viewWillAppear(animated)        
         (self.tabBarController as! HomeTabBarViewController).setNavTitle(2)
-        
-        bornDateLbl.text = "- Tap here and select a day -"
-        
-        datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
+    }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        setBornDate("- Tap here and select a day -")
+        
         if let baby = PersistenceManager.instance.baby{
             
             babyNameTxtField.text = baby.name
@@ -61,19 +64,9 @@ class BabyDetailsViewController: UIViewController {
             
             bornDateLbl.text = baby.bornDate == "" ? "- Tap here and select a day -" : baby.bornDate
             
-            print(baby.bornDate)
-            
-            if(bornDateLbl.text != "- Tap here and select a day -"){
-                datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
-            }
+            setBornDate(baby.bornDate)
             
         }
-        
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     // MARK: - Keyboard management Methods
@@ -109,10 +102,21 @@ class BabyDetailsViewController: UIViewController {
     @IBAction func bornDateChanged(sender: UIDatePicker) {
         
         bornDateLbl.text = sender.date.stringFromDateInGeneralFormat()
-        
+        PersistenceManager.instance.baby!.bornDate = bornDateLbl.text!
+        PersistenceManager.instance.saveBaby()
     }
     
     //MARK: - Functions
+    
+    func setBornDate(date:String){
+    
+        bornDateLbl.text = date == "" ? "- Tap here and select a day -" : date
+        
+        if(bornDateLbl.text != "- Tap here and select a day -"){
+            datePicker.setDate(NSDate().dateFromString(bornDateLbl.text!, format: NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())!), animated: false)
+        }
+        
+    }
     /**
      * @author: Daniela Velasquez
      * Show dateBorn datePicker view.
